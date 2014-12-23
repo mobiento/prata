@@ -1,0 +1,6 @@
+.DS_store
+db.json
+node_modules/
+public/assets/build/
+public/schemas/*
+!public/schemas/tests.json

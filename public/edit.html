@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Prata — Edit</title>
+
+    <link rel="stylesheet" href="assets/build/styles.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+
+        <div class="span12 col-md-12 columns twelve large-12">
+            <h2>Editor</h2>
+            <p>Below is the editor generated from the JSON Schema.</p>
+            <p class="pull-right">
+                <button class="btn disabled action-showvalidation">Valid</button>
+                <button class="btn btn-primary action-savedata">Save data</button>
+            </p>
+
+            <div id="editor"></div>
+
+            <p class="pull-right">
+                <button class="btn disabled action-showvalidation">Valid</button>
+                <button class="btn btn-primary action-savedata">Save data</button>
+            </p>
+
+            <hr>
+        </div>
+
+        <!-- -->
+
+        <div class="span12 col-md-12 columns twelve large-12">
+            <h2>Schema</h2>
+            <p>
+                You can change the schema and see how the generated form looks.  After you make changes, click
+            </p>
+            <textarea id="schema-tree" style="width: 100%; height: 450px; font-family: monospace;" class="form-control"></textarea>
+            <p class="pull-right">
+                <button class="btn btn-secondary action-updateschema">Update Schema</button>
+                <button class="btn btn-primary action-saveschema">Save Schema</button>
+            </p>
+
+            <hr>
+        </div>
+
+        <!-- -->
+
+        <div class="span12 col-md-12 columns twelve large-12">
+
+            <h2>Data</h2>
+            <p>You can also make changes to the JSON here and set the value in the editor.</p>
+            <textarea id="schema-data" style="width: 100%; height: 300px; font-family: monospace;" class="form-control"></textarea>
+            <p class="pull-right">
+                <button class="btn action-updatedata">Update data</button>
+                <button class="btn btn-primary action-savedata">Save data</button>
+            </p>
+
+            <hr>
+    </div>
+</div>
+<script src="assets/build/scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <title>JSON Server</title>
+    <link rel="stylesheet" href="assets/styles/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <hr>
+
+      <p>
+        <em>
+          Congrats! You're successfully running JSON Server.
+        </em>
+      </p>
+
+      <hr>
+
+      <h4>Routes</h4>
+      <p>
+        Here are the resources that JSON Server has loaded:
+      </p>
+      <p>
+        <ul id="resources">loading, please wait...</ul>
+      </p>
+
+      <p>
+        You can view database current state at any time:
+        <ul>
+          <li>
+            <a href="db">db</a>
+          </li>
+        </ul>
+      </p>
+
+      <p>
+        You can use GET, POST, PUT... and access your resources from anywhere
+        using CORS and JSONP.
+      </p>
+
+      <h4>Try it out</h4>
+      <p>
+        Copy/paste the following code in your browser console:
+      </p>
+<pre><code>  $.ajax({
+    type: 'POST',
+    url: 'posts',
+    data: {id: 2, body: 'baz'}
+  });
+
+  $.ajax({
+    type: 'PUT',
+    url: 'posts/2',
+    data: {body: 'test'}
+  });</code></pre>
+
+      <hr>
+
+    </div>
+
+
+    <script src="assets/scripts/jquery-1.11.2.js"></script>
+    <script>
+      $(function() {
+        $.get('/db/').then(function(data) {
+          $('#resources').empty();
+          $.each(data, function(key, value) {
+            $('#resources')
+              .append('<li><a href="/'+ key + '">' + key + '</a></li>');
+          })
+        })
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+{
+	"verbose": true,
+	"ignore": [
+		".DS_store",
+    	".git",
+    	".gitignore",
+    	"db.json",
+    	"public/*",
+    	"node_modules/**/node_modules"
+  	]
+}

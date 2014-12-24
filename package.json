@@ -1,9 +1,15 @@
 {
   "name": "prata",
   "version": "0.1.0",
-  "author": "julien-bechade",
-  "description": "Prototype data",
-  "repository": "",
+  "author": {
+    "name": "Julien Béchade",
+    "email": "julien.bechade@mobiento.com"
+  },
+  "description": "A module to prototype data",
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/mobiento/mobiento-prata.git"
+  },
   "dependencies": {
     "json-server": "latest",
     "jquery": "latest",
@@ -22,7 +28,8 @@
 
   	"build": "npm run build:js && npm run build:css",
   	"build:css": "lessc --compress --source-map public/assets/styles/styles.less public/assets/build/styles.css",
-  	"build:js": "browserify public/assets/scripts/app.js -d -p [minifyify --map scripts.js.map --output public/assets/build/scripts.js.map --uglify] > public/assets/build/scripts.js",
+  	"build:js": "browserify public/assets/scripts/app.js > public/assets/build/scripts.js",
+    "build:uglifyjs": "browserify public/assets/scripts/app.js -d -p [minifyify --map scripts.js.map --output public/assets/build/scripts.js.map --uglify] > public/assets/build/scripts.js",
   	"prebuild:js": "npm run lint",
 
   	"watch": "parallelshell 'npm run watch:js' 'npm run watch:css'",

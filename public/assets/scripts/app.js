@@ -74,7 +74,7 @@ else
         }
     };
 
-    schema.title = schema.data.title;
+    schema.title = schema.tree.title;
 }
 
 var $tree = $('#schema-tree');

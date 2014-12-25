@@ -1,0 +1,57 @@
+{{> header }}
+
+<div class="container">
+    <div class="row">
+
+        <div id="section-editor" class="col-md-12">
+            <h2>Editor</h2>
+            <p>Below is the editor generated from the JSON Schema.</p>
+            <p class="pull-right">
+                <button class="btn disabled action-showvalidation">Valid</button>
+                <button class="btn btn-primary action-savedata">Save data</button>
+            </p>
+
+            <div id="schema-editor"></div>
+
+            <p class="pull-right">
+                <button class="btn disabled action-showvalidation">Valid</button>
+                <button class="btn btn-primary action-savedata">Save data</button>
+            </p>
+
+            <hr>
+        </div>
+
+        <!-- -->
+
+        <div id="section-schema" class="col-md-12">
+            <h2>Schema</h2>
+            <p>
+                You can change the schema and see how the generated form looks.  After you make changes, click
+            </p>
+            <textarea id="schema-tree"></textarea>
+            <p class="pull-right">
+                <button class="btn btn-default action-updateschema">Update Schema</button>
+                <button class="btn btn-primary action-saveschema">Save Schema</button>
+            </p>
+
+            <hr>
+        </div>
+
+        <!-- -->
+
+        <div id="section-data" class="col-md-12">
+
+            <h2>Data</h2>
+            <p>You can also make changes to the JSON here and set the value in the editor.</p>
+            <textarea id="schema-data"></textarea>
+            <p class="pull-right">
+                <button class="btn btn-default action-updatedata">Update data</button>
+                <button class="btn btn-primary action-savedata">Save data</button>
+            </p>
+
+            <hr>
+        </div>
+    </div>
+</div>
+
+{{> footer }}

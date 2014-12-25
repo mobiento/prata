@@ -21,18 +21,25 @@
   	"browserify": "latest",
   	"minifyify": "latest",
   	"watch": "latest",
-  	"parallelshell": "latest"
+  	"parallelshell": "latest",
+    "handlebars": "latest",
+    "metalsmith": "latest",
+    "metalsmith-templates": "latest",
+    "metalsmith-markdown": "latest",
+    "metalsmith-permalinks": "latest"
   },
   "scripts": {
   	"lint": "jshint public/assets/scripts/app.js",
 
-  	"build": "npm run build:js && npm run build:css",
+  	"build": "npm run build:js && npm run build:css && npm run build:html",
+    "build:html": "metalsmith",
   	"build:css": "lessc --compress --source-map public/assets/styles/styles.less public/assets/build/styles.css",
   	"build:js": "browserify public/assets/scripts/app.js > public/assets/build/scripts.js",
     "build:uglifyjs": "browserify public/assets/scripts/app.js -d -p [minifyify --map scripts.js.map --output public/assets/build/scripts.js.map --uglify] > public/assets/build/scripts.js",
   	"prebuild:js": "npm run lint",
 
-  	"watch": "parallelshell 'npm run watch:js' 'npm run watch:css'",
+  	"watch": "parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run watch:html'",
+    "watch:html": "watch 'npm run build:html' templates/",
   	"watch:css": "watch 'npm run build:css' public/assets/styles/",
   	"watch:js": "watch 'npm run build:js' public/assets/scripts/",
 

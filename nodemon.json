@@ -6,6 +6,8 @@
     	".gitignore",
     	"db.json",
     	"public/*",
+    	"contents/*",
+    	"templates/*",
     	"node_modules/**/node_modules"
   	]
 }

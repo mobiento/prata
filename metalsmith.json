@@ -1,0 +1,22 @@
+{
+  "source": "./contents",
+  "destination": "./public",
+  "metadata": {
+    "title": "Prata",
+    "description": "Prototype data."
+  },
+  "plugins": {
+    "metalsmith-markdown": {},
+    "metalsmith-permalinks": {
+      "pattern": ":title"
+    },
+    "metalsmith-templates": {
+      "engine": "handlebars",
+      "directory": "./templates",
+      "partials": {
+        "header": "./templates/partials/header",
+        "footer": "./templates/partials/footer"
+      }
+    }
+  }
+}

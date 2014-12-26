@@ -6,7 +6,23 @@ require('codemirror/addon/selection/active-line');
 var code = require('codemirror/lib/codemirror');
 var $ = require('jquery');
 
-var schema = { query: {}, base: 'schemas' },
+$
+.get('/db/')
+.then(
+    function(data) 
+    {
+        $('#resources').empty();
+        $.each(
+            data, 
+            function(key, value) 
+            {
+                $('#resources').append('<a class="list-group-item" href="/'+ key + '">' + key + '</a>');
+            }
+        );
+    }
+);
+
+var schema = { query: {}, base: '/schemas/' },
 	q = schema.query;
 
 q.self = window.location.href.match('[?&]schema=([^&]+)');
@@ -19,14 +35,14 @@ if(q.self)
 
     if(q.isNumber) 
     {
-        schema.route = 'schemas/' + q.self[1];
+        schema.route = schema.base + q.self[1];
     }
     else if(q.isString)
     {
-        schema.route = 'schemas/?title=' + q.self[1];
+        schema.route = schema.base + '?title=' + q.self[1];
     }
     else {
-        window.location = 'edit.html';
+        window.location = '/edit/';
     }
 
     $.ajax(
@@ -45,7 +61,7 @@ if(q.self)
         	}
         	catch(error) {
         		console.log('Schema does not exists: ' + error.message);
-        		window.location = 'edit.html';
+        		window.location = '/edit/';
         	}
         	
     	}
@@ -97,7 +113,7 @@ if (schema.title)
 	    {
 	        async: false,
 	        type: 'GET',
-	        url: schema.title
+	        url: '/' + schema.title
 	    }
 	)
 	.done(
@@ -168,7 +184,7 @@ $saveschema.on('click', function(e)
     	{ 
 	        console.log('Response: ');
 	        console.log(res);
-	        window.location = 'edit.html?schema=' + schema.title ;
+	        window.location = '/edit/?schema=' + schema.title ;
     	}
     );
 });
@@ -183,7 +199,7 @@ $savedata.on('click', function(e)
         {
             async: false,
             type: 'GET',
-            url: schema.title
+            url: '/' + schema.title
         }
     )
     .done(
@@ -198,7 +214,7 @@ $savedata.on('click', function(e)
                             {
                                 async: false,
                                 type: 'DELETE',
-                                url: schema.title + '/' + val.id,
+                                url: '/' + schema.title + '/' + val.id,
                             }
                         )
                         .done(function () {
@@ -222,7 +238,7 @@ $savedata.on('click', function(e)
                     type: 'POST',
                     contentType: 'application/json',
                     dataType: 'json',
-                    url: schema.title,
+                    url: '/' + schema.title,
                     data: JSON.stringify(val)
                 }
             )
@@ -240,12 +256,12 @@ var reload = function() {
     if(treeeditor) treeeditor.toTextArea();
     if(dataeditor) dataeditor.toTextArea();
 
-    jsoneditor = new JSONEditor(document.getElementById('editor'), {
+    jsoneditor = new JSONEditor(document.getElementById('schema-editor'), {
         ajax: true,
         schema: schema.tree,
         startval: schema.data,
-        theme: 'bootstrap2',
-        iconlib: 'fontawesome3'
+        theme: 'bootstrap3',
+        iconlib: 'bootstrap3'
     });
 
     window.jsoneditor = jsoneditor;

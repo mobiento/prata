@@ -24,6 +24,7 @@
   	"parallelshell": "latest",
     "handlebars": "latest",
     "metalsmith": "latest",
+    "metalsmith-collections": "latest",
     "metalsmith-templates": "latest",
     "metalsmith-markdown": "latest",
     "metalsmith-permalinks": "latest"
@@ -38,8 +39,9 @@
     "build:uglifyjs": "browserify public/assets/scripts/app.js -d -p [minifyify --map scripts.js.map --output public/assets/build/scripts.js.map --uglify] > public/assets/build/scripts.js",
   	"prebuild:js": "npm run lint",
 
-  	"watch": "parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run watch:html'",
+  	"watch": "parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run watch:html' 'npm run watch:data'",
     "watch:html": "watch 'npm run build:html' templates/",
+    "watch:data": "watch 'npm run build:html' contents/",
   	"watch:css": "watch 'npm run build:css' public/assets/styles/",
   	"watch:js": "watch 'npm run build:js' public/assets/scripts/",
 

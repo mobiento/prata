@@ -2,7 +2,7 @@
 	"verbose": true,
 	"ignore": [
 		".DS_store",
-    	".git",
+    	".git/*",
     	".gitignore",
     	"db.json",
     	"public/*",

@@ -11,6 +11,7 @@
     "url": "https://bitbucket.org/mobiento/mobiento-prata.git"
   },
   "dependencies": {
+    "http-auth": "latest",
     "json-server": "latest",
     "jquery": "latest",
     "codemirror": "latest"

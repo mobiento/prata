@@ -10,11 +10,18 @@
 	<div class="container">
 		<div class="header">
 			<nav>
-				<ul class="nav nav-pills pull-right">
-					<li><a href="/">Home</a></li>
-					<li><a href="/edit/">Edit</a></li>
+				<ul class="nav nav-pills pull-right" role="tablist">
+					<li role="presentation" class="dropdown">
+						<a id="menu-edit" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+          					Edit
+							<span class="caret"></span>
+						</a>
+						<ul id="menu-edit-list" class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu-edit">
+							<li role="presentation">Loading routes…</li>
+						</ul>
+					</li>
 				</ul>
 			</nav>
-			<h3 class="text-muted">{{ title }}</h3>
+			<h3 class="text-muted"><a href="/">{{ title }}</a></h3>
 		</div>
 	</div>

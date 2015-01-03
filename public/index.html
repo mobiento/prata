@@ -10,12 +10,19 @@
 	<div class="container">
 		<div class="header">
 			<nav>
-				<ul class="nav nav-pills pull-right">
-					<li><a href="/">Home</a></li>
-					<li><a href="/edit/">Edit</a></li>
+				<ul class="nav nav-pills pull-right" role="tablist">
+					<li role="presentation" class="dropdown">
+						<a id="menu-edit" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+          					Edit
+							<span class="caret"></span>
+						</a>
+						<ul id="menu-edit-list" class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu-edit">
+							<li role="presentation">Loading routes…</li>
+						</ul>
+					</li>
 				</ul>
 			</nav>
-			<h3 class="text-muted">Prata</h3>
+			<h3 class="text-muted"><a href="/">Prata</a></h3>
 		</div>
 	</div>
 <div class="container">
@@ -32,17 +39,31 @@
     </p>
   </div>
 
-  <h2>Routes</h2>
-  <p>Here are the resources available on this server:</p>
-  <p id="resources" class="list-group">loading, please wait...</p>
-
 </div>
 
 	<div class="container">
 		<hr>
-		<p class="pull-right">Made by <a href="http://mobiento.com">Mobiento</a> with <span style="color: red;">❤</span></p>
+		<p class="pull-right">Made by <a href="http://mobiento.com">Mobiento</a> with <span style="color:red;">❤</span></p>
 	</div>
 
+	<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content panel-" id="modal-content">
+				<div class="modal-header panel-heading">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="modal-title">Modal title</h4>
+				</div>
+				<div class="modal-body" id="modal-body">
+				...
+				</div>
+				<div class="modal-footer" id="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="/assets/scripts/jsonlint.js"></script>
     <script src="/assets/build/scripts.js"></script>
 </body>
 </html>

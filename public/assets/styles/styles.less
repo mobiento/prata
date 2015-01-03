@@ -20,15 +20,20 @@ hr {
 		padding-bottom: 19px;
 		margin: 0;
 		line-height: 40px;
-	}
 
-	.btn {
-		padding: 15px 25px;
-		font-size: 21px;
+		a {
+			color: inherit;
+
+			&:hover,
+			&:focus, { text-decoration: none; }
+		}
 	}
 }
 
+.nav li { text-transform: capitalize; }
+
 .jumbotron {
+	margin-bottom: 10px;
 	text-align: center;
 
 	h1 { font-size: 63px; }
@@ -39,6 +44,9 @@ hr {
 	}
 }
 
+[id*="section-"] { display: none; opacity: 0; transition: opacity .5s; }
+#section-schema { display: block; }
+[id*="section-"].is-loaded { opacity: 1; }
 
 
 .CodeMirror {

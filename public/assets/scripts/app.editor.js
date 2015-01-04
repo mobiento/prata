@@ -57,6 +57,7 @@ require('./jsoneditor.js');
 					ajax: true,
 					schema: schema,
 					startval: data,
+					template: 'handlebars',
 					theme: 'bootstrap3',
 					iconlib: 'bootstrap3'
 				});

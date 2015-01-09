@@ -2,10 +2,12 @@
 	"verbose": true,
 	"ignore": [
 		".DS_store",
-    	".git",
+    	".git/*",
     	".gitignore",
     	"db.json",
     	"public/*",
+    	"contents/*",
+    	"templates/*",
     	"node_modules/**/node_modules"
   	]
 }

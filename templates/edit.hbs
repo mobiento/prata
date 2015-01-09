@@ -1,0 +1,46 @@
+{{> header }}
+
+<div class="container">
+    <div class="row">
+
+        <div id="section-editor" class="col-md-12 section">
+
+            <div id="schema-editor" class="clearfix"></div>
+
+        </div>
+
+        <!-- -->
+
+        <div id="section-schema" class="col-md-12 section">
+            <h2>Schema</h2>
+            <p>
+                If you want to see your changes applied to the top editor, click update.
+            </p>
+            <textarea id="schema-tree"></textarea>
+
+        </div>
+
+        <!-- -->
+
+        <div id="section-data" class="col-md-12 section">
+
+            <h2>Data</h2>
+            <p>
+                If you want to see your changes applied to the top editor, click update.
+            </p>
+            <textarea id="schema-data"></textarea>
+
+        </div>
+    </div>
+</div>
+
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+        <button class="btn btn-danger action-delete pull-left">Delete</button>
+        <button class="btn btn-primary action-save pull-right">Save</button>
+        <button class="btn btn-default action-update pull-right">Update</button>
+        <button class="btn btn-success action-showvalidation pull-right" disabled="true">Valid</button>
+    </div>
+</div>
+
+{{> footer }}

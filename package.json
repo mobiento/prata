@@ -1,35 +1,50 @@
 {
   "name": "prata",
   "version": "0.1.0",
-  "author": "julien-bechade",
-  "description": "Prototype data",
-  "repository": "",
+  "author": {
+    "name": "Julien Béchade",
+    "email": "julien.bechade@mobiento.com"
+  },
+  "description": "A module to prototype data",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mobiento/prata.git"
+  },
   "dependencies": {
     "json-server": "latest",
     "jquery": "latest",
-    "codemirror": "latest"
+    "codemirror": "latest",
+    "handlebars": "latest",
+    "faker": "latest"
   },
   "devDependencies": {
-  	"less":  "latest",
-  	"jshint": "latest",
-  	"browserify": "latest",
-  	"minifyify": "latest",
-  	"watch": "latest",
-  	"parallelshell": "latest"
+    "less": "latest",
+    "jshint": "latest",
+    "browserify": "latest",
+    "minifyify": "latest",
+    "watch": "latest",
+    "parallelshell": "latest",
+    "handlebars": "latest",
+    "metalsmith": "latest",
+    "metalsmith-collections": "latest",
+    "metalsmith-templates": "latest",
+    "metalsmith-markdown": "latest",
+    "metalsmith-permalinks": "latest"
   },
   "scripts": {
-  	"lint": "jshint public/assets/scripts/app.js",
-
-  	"build": "npm run build:js && npm run build:css",
-  	"build:css": "lessc --compress --source-map public/assets/styles/styles.less public/assets/build/styles.css",
-  	"build:js": "browserify public/assets/scripts/app.js -d -p [minifyify --map scripts.js.map --output public/assets/build/scripts.js.map --uglify] > public/assets/build/scripts.js",
-  	"prebuild:js": "npm run lint",
-
-  	"watch": "parallelshell 'npm run watch:js' 'npm run watch:css'",
-  	"watch:css": "watch 'npm run build:css' public/assets/styles/",
-  	"watch:js": "watch 'npm run build:js' public/assets/scripts/",
-
-  	"dev": "parallelshell 'npm start' 'npm run watch'",
+    "lint": "jshint public/assets/scripts/app.js",
+    "build": "npm run build:js && npm run build:css && npm run build:html",
+    "build:html": "metalsmith",
+    "build:css": "lessc --compress --source-map public/assets/styles/styles.less public/assets/build/styles.css",
+    "build:js": "browserify public/assets/scripts/app.js > public/assets/build/scripts.js",
+    "build:uglifyjs": "browserify public/assets/scripts/app.js -d -p [minifyify --map scripts.js.map --output public/assets/build/scripts.js.map --uglify] > public/assets/build/scripts.js",
+    "prebuild:js": "npm run lint",
+    "watch": "parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run watch:html' 'npm run watch:data'",
+    "watch:html": "watch 'npm run build:html' templates/",
+    "watch:data": "watch 'npm run build:html' contents/",
+    "watch:css": "watch 'npm run build:css' public/assets/styles/",
+    "watch:js": "watch 'npm run build:js' public/assets/scripts/",
+    "dev": "parallelshell 'npm start' 'npm run watch'",
     "start": "nodemon index.js"
   }
 }

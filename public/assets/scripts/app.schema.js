@@ -1,16 +1,18 @@
-var code = require('./app.codemirror.js');
+var CodeMirror = require('./app.codemirror.js');
 
 require('./app.data.js');
 
-(function (code, $, document, window) {
+(function (CodeMirror, $, document, window) {
 
 	var $section 	= $('#section-schema');
 	var $textarea	= $('#schema-tree');
 	var textarea	= document.getElementById('schema-tree');
-	var $save 		= $('.action-saveschema');
-	var $update 	= $('.action-updateschema');
+	var $save 		= $('.action-save');
+	var $update 	= $('.action-update');
+	var $validate 	= $('.action-showvalidation');
 
 	var editor;
+	var error;
 	var _this;
 
 	var schema = { 
@@ -18,11 +20,25 @@ require('./app.data.js');
 		query: {
 			isLocal: window.location.href.match('[?&]schema=([^&]+)'),
 			isRemote: window.location.href.match('[?&]url=([^&]+)'),
+		},
+		defaults: {
+			title: '',
+			type: 'array',
+			items: {
+				title: '',
+				id: '',
+				type: 'object',
+				properties: {
+					name: {
+						type: 'string'
+					}
+				}
+			}
 		}
 	};
 
 	var isNumber = function (val) { return /^[0-9]+$/.test(val) };
-	var isString = function (val) { return /^[a-z]+$/.test(val) };
+	var isString = function (val) { return /^\w+$/.test(val) };
 
 
 	/**
@@ -67,13 +83,53 @@ require('./app.data.js');
 		 *
 		 *
 		 */
+		disableUI: function () {
+
+			error = true;
+			$validate
+				.removeClass('btn-success')
+				.addClass('btn-danger')
+				.text('Not valid');
+			$save.attr('disabled', 'true');
+			$update.attr('disabled', 'true');
+		},
+
+		enableUI: function () {
+
+			error = false;
+			$validate
+				.removeClass('btn-danger')
+				.addClass('btn-success')
+				.text('Valid');
+			$save.removeAttr('disabled');
+			$update.removeAttr('disabled');
+		},
+
+		validate: function (schema) {
+
+			if (!schema.data.title) {
+				throw 'Title is mandatory.';
+			}
+			if (!schema.data.type || schema.data.type !== 'array') {
+				throw 'Schema type must be an array.';
+			}
+			if (!isString(schema.data.title)) {
+				throw 'Unvalid characters for title.';
+			}
+		},
+
+
+		/**
+		 *
+		 *
+		 */
 		onLoad: function () {
 
 			if(schema.query.isLocal) {
 
 				if(isNumber(schema.query.isLocal[1])) 		schema.route = schema.base + schema.query.isLocal[1];
 				else if(isString(schema.query.isLocal[1])) 	schema.route = schema.base + '?title=' + schema.query.isLocal[1];
-				else 										window.location = '/add/';
+				else 										window.location = '/edit/';
 
 				$.ajax({
 					async: false,
@@ -85,24 +141,28 @@ require('./app.data.js');
 					try {
 						schema.data = (isNumber(schema.query.isLocal[1])) ? data : data[0];
 					}
-					catch(error) {
+					catch(err) {
+						error = true;
+
 						$(document).trigger('show.prata.modal', 
 							[{
 								context: 'danger',
-								title: 'Schema "'+ schema.query.isLocal[1] +'" does not exist.',
+								title: 'Schema '+ schema.query.isLocal[1] +' does not exist.',
 								body: 'Let\'s create one then.'
 							}]
 						);
-
-						return;
 					}
 				});
+
+				if(error) return;
 			}
 			else if(schema.query.isRemote) {
 				schema.data = { 
 					title: schema.query.isRemote[1].match(/\/(.*)\./)[1],
 					$ref: schema.query.isRemote[1]
 				};
+
+				this.onSave();
 			}
 
 			if(schema.data) {
@@ -111,7 +171,7 @@ require('./app.data.js');
 				$(document).trigger('load.prata.schema', [schema.data]);
 			}
 			else {
-				$textarea.val( JSON.stringify({}, null, 2) );
+				$textarea.val( JSON.stringify(schema.defaults, null, 2) );
 			}
 			
 			this.codeMirror();
@@ -127,20 +187,28 @@ require('./app.data.js');
 			if(editor) editor.toTextArea();
 
 			try {
-				editor = code.mirror.fromTextArea(
+				editor = CodeMirror.fromTextArea(
 					textarea, 
-					code.options
+					CodeMirror.options
 				);
 
-				editor.on('change', function (code) {
-					schema.data = code.getValue('')
-					$textarea.val( schema.data );
+				editor.on('change', function (edit) {
+					try {
+						schema.data = jsonlint.parse( edit.getValue('') );
+						$textarea.val( JSON.stringify(schema.data, null, 2) );
+						_this.validate(schema);
+						_this.enableUI();
+					}
+					catch (err) {
+						_this.disableUI();
+					}
 				});
 			}
-			catch (error) {
-				console.log(error);
-				return;
+			catch (err) {
+				error = true;
 			}
+
+			if(error) return;
 
 			$section.show(0, function () {
 				$section.addClass('is-loaded');
@@ -156,8 +224,11 @@ require('./app.data.js');
 
 			try {
 				schema.data = jsonlint.parse( $textarea.val() );
+				this.enableUI();
 			}
-			catch(error) {
+			catch(err) {
+				this.disableUI();
+
 				$(document).trigger('show.prata.modal', 
 					[{
 						context: 'danger',
@@ -165,8 +236,9 @@ require('./app.data.js');
 						body: error
 					}]
 				);
-				return;
 			}
+
+			if(error) return;
 
 			$(document).trigger('update.prata.schema', [schema.data]);
 		},
@@ -175,33 +247,24 @@ require('./app.data.js');
 
 			var schemas;
 			var index = 1;
-			var exit = false;
 
 			try {
 				schema.data = jsonlint.parse( $textarea.val() );
+				this.validate(schema);
+				this.enableUI();
 			}
-			catch (error) {
+			catch (err) {
+				this.disableUI();
 				$(document).trigger('show.prata.modal', 
 					[{
 						context: 'danger',
 						title: 'Invalid schema',
-						body: error
+						body: err
 					}]
 				);
-				return;
 			}
 
-			if (!schema.data.title) {
-
-				$(document).trigger('show.prata.modal', 
-					[{
-						context: 'danger',
-						title: 'Invalid schema',
-						body: 'Title is mandatory.'
-					}]
-				);
-				return;
-			}
+			if(error) return;
 
 			if (!schema.data.id) {
 
@@ -210,8 +273,8 @@ require('./app.data.js');
 					type: 'GET',
 					url: schema.base
 				})
-				.done(function (data) {
-					schemas = data;
+				.done(function (res) {
+					schemas = res;
 				});
 
 				$.each(schemas, function (i, val) {
@@ -221,18 +284,18 @@ require('./app.data.js');
 							[{
 								context: 'danger',
 								title: 'Invalid schema',
-								body: 'The "'+ val.title +'" schema already exists.'
+								body: 'The '+ val.title +' schema already exists.'
 							}]
 						);
 
-						exit = true;
+						error = true;
 						return false;
 					}
 
 					index += 1;
 				});
 
-				if (exit) return;
+				if (error) return;
 
 				schema.data.id = index;
 			}
@@ -246,18 +309,18 @@ require('./app.data.js');
 				data: JSON.stringify(schema.data)
 			})
 			.done(function (res) { 
+				schema.data = res;
+				$textarea.val( JSON.stringify(schema.data, null, 2) );
+				if (editor) editor.setValue( $textarea.val() );
 				$(document).trigger('show.prata.modal', 
 					[{
 						context: 'success',
-						title: 'Schema "' + schema.data.title + '" is saved',
-						body: 'All right! Let\'s edit some "' + schema.data.title + '" then.',
-						footer: '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>',
-						callback: function () { 
-							$(document).trigger('save.prata.schema', [schema.data]); 
-							window.history.pushState({}, '', '/edit/?schema='+ schema.data.title); 
-						}
+						title: 'All good!',
+						body: 'Schema "'+ schema.data.title +'" saved successfully.'
 					}]
 				);
+				$(document).trigger('save.prata.schema', [res]); 
+				window.history.pushState({}, '', '/edit/?schema='+ res.title);
 			});
 		}
 
@@ -266,4 +329,4 @@ require('./app.data.js');
 	return new Schema();
 
 
-})(code, jQuery, document, window);
+})(CodeMirror, jQuery, document, window);

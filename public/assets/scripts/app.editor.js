@@ -4,6 +4,9 @@ require('./jsoneditor.js');
 
 	var $section 	= $('#section-editor');
 	var el			= document.getElementById('schema-editor');
+	var $validate 	= $('.action-showvalidation');
+	var $save 		= $('.action-save');
+	var $update 	= $('.action-update');
 
 	var schema = {};
 	var data = {};
@@ -50,7 +53,9 @@ require('./jsoneditor.js');
 		 */
 		onLoad: function () {
 
-			if(editor) editor.destroy();
+			if(editor) {
+				editor.destroy();
+			}
 
 			try {
 				editor = new JSONEditor(el, {
@@ -59,13 +64,14 @@ require('./jsoneditor.js');
 					startval: data,
 					template: 'handlebars',
 					theme: 'bootstrap3',
-					iconlib: 'bootstrap3'
+					iconlib: 'bootstrap3',
+					disable_edit_json: true,
+					disable_properties: true,
+					required_by_default: true
 				});
 
 				editor.on('change',function() {
-					console.log('Editor changed.');
-					data = editor.getValue();
-					$(document).trigger('change.prata.editor', [data]);
+					_this.onChange();
 				});
 			}
 			catch (error) {
@@ -75,7 +81,7 @@ require('./jsoneditor.js');
 
 			$section.show(0, function () {
 				$section.addClass('is-loaded');
-			})
+			});
 		},
 
 
@@ -83,34 +89,34 @@ require('./jsoneditor.js');
 		 *
 		 *
 		 */
-		onChange: function (editor) {
+		onChange: function () {
 
-			//data = editor.getValue();
+			var errors = editor.validate();
 
-			//var errors = editor.validate();
-			//var $indicator = $('.action-showvalidation');
+			// console.log(errors);
 
-			//$(document).trigger('change.prata.editor', [data]);
-			// $data.val( JSON.stringify(editor.getValue(), null, 2) );
+			if(errors.length) {	
+				$validate
+					.removeClass('btn-success')
+					.addClass('btn-danger')
+					.text('Not valid');
+				$save.attr('disabled', 'true');
+				$update.attr('disabled', 'true');
 
-			/*
-			if(errors.length) {
-				$indicator.removeClass('btn-success');
-				$indicator.addClass('btn-danger');
-				$indicator.text('Not valid');
-				$savedata.addClass('disabled');
-				$savedata.attr('disabled', 'true');
+				return;
 			}
 			else {
-				$indicator.removeClass('btn-danger');
-				$indicator.addClass('btn-success');
-				$indicator.text('Valid');
-				$savedata.removeClass('disabled');
-				$savedata.removeAttr('disabled');
+				$validate
+					.removeClass('btn-danger')
+					.addClass('btn-success')
+					.text('Valid');
+				$save.removeAttr('disabled');
+				$update.removeAttr('disabled');
 			}
-			*/
-		}
 
+			data = editor.getValue();
+			$(document).trigger('change.prata.editor', [data]);
+		}
 	};
 
 	return new Editor();

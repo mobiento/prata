@@ -3,45 +3,32 @@
 <div class="container">
     <div class="row">
 
-        <div id="section-editor" class="col-md-12">
-            <h2>Editor</h2>
-            <p>Below is the editor generated from the JSON Schema.</p>
-            <div id="schema-editor"></div>
-            <p class="clearfix">
-                <button class="btn disabled action-showvalidation pull-left">Valid</button>
-                <button class="btn btn-primary action-savedata pull-right">Save</button>
-            </p>
+        <div id="section-editor" class="col-md-12 section">
 
-            <hr>
+            <div id="schema-editor" class="clearfix"></div>
+
         </div>
 
         <!-- -->
 
-        <div id="section-schema" class="col-md-12">
+        <div id="section-schema" class="col-md-12 section">
             <h2>Schema</h2>
             <p>
-                You can change the schema and see how the generated form looks by updating.
+                If you want to see your changes applied to the top editor, click update.
             </p>
             <textarea id="schema-tree"></textarea>
-            <p class="clearfix">
-                <button class="btn btn-default action-updateschema pull-left">Update</button>
-                <button class="btn btn-primary action-saveschema pull-right">Save</button>
-            </p>
 
-            <hr>
         </div>
 
         <!-- -->
 
-        <div id="section-data" class="col-md-12">
+        <div id="section-data" class="col-md-12 section">
 
             <h2>Data</h2>
-            <p>You can also make changes to the JSON here and set the value in the editor.</p>
-            <textarea id="schema-data"></textarea>
-            <p class="clearfix">
-                <button class="btn btn-default action-updatedata pull-left">Update</button>
-                <button class="btn btn-primary action-savedata pull-right">Save</button>
+            <p>
+                If you want to see your changes applied to the top editor, click update.
             </p>
+            <textarea id="schema-data"></textarea>
 
         </div>
     </div>

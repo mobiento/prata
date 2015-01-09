@@ -7,6 +7,7 @@ require('./app.data.js');
 	var $section 	= $('#section-schema');
 	var $textarea	= $('#schema-tree');
 	var textarea	= document.getElementById('schema-tree');
+	var $delete 	= $('.action-delete');
 	var $save 		= $('.action-save');
 	var $update 	= $('.action-update');
 	var $validate 	= $('.action-showvalidation');
@@ -76,6 +77,11 @@ require('./app.data.js');
 				e.preventDefault();
 				_this.onUpdate();
 			});
+
+			$delete.on('click', function (e) {
+				e.preventDefault();
+				_this.onDelete();
+			});
 		},
 
 
@@ -105,7 +111,7 @@ require('./app.data.js');
 			$update.removeAttr('disabled');
 		},
 
-		validate: function (schema) {
+		validate: function () {
 
 			if (!schema.data.title) {
 				throw 'Title is mandatory.';
@@ -224,6 +230,7 @@ require('./app.data.js');
 
 			try {
 				schema.data = jsonlint.parse( $textarea.val() );
+				this.validate(schema);
 				this.enableUI();
 			}
 			catch(err) {
@@ -243,6 +250,11 @@ require('./app.data.js');
 			$(document).trigger('update.prata.schema', [schema.data]);
 		},
 
+
+		/**
+		 *
+		 *
+		 */
 		onSave: function () {
 
 			var schemas;
@@ -250,7 +262,7 @@ require('./app.data.js');
 
 			try {
 				schema.data = jsonlint.parse( $textarea.val() );
-				this.validate(schema);
+				this.validate();
 				this.enableUI();
 			}
 			catch (err) {
@@ -322,6 +334,74 @@ require('./app.data.js');
 				$(document).trigger('save.prata.schema', [res]); 
 				window.history.pushState({}, '', '/edit/?schema='+ res.title);
 			});
+		},
+
+
+		/**
+		 *
+		 *
+		 */
+		onDelete: function () {
+
+			$(document).trigger('show.prata.modal',
+				[{
+					context: 'danger',
+					title: 'Danger zone!',
+					body: 'Are you sure you want to delete the schema "'+ schema.data.title +'" and all associated data?',
+					footer: '<a href="#" type="button" class="btn btn-danger pull-right" onClick="jQuery(document).trigger(\'delete.prata.schema\');" data-dismiss="modal">Delete</a><button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>'
+				}]
+			);
+
+			$(document).on('delete.prata.schema', function () {
+				deleteData();
+				deleteSchema();
+			});
+
+
+			/**
+			 *
+			 *
+			 */
+			function deleteSchema () {
+
+				$.ajax({
+					async: false,
+					type: 'DELETE',
+					url: schema.base + schema.data.id,
+				})
+				.done(function () {
+					console.log('Schema '+ schema.data.id +' deleted.');
+				});
+			}
+
+
+			/**
+			 *
+			 *
+			 */
+			function deleteData () {
+
+				$.ajax({
+					async: false,
+					type: 'GET',
+					url: '/' + schema.data.title
+				})
+				.done(function (res) {
+					if(!$.isEmptyObject(res)) {
+						$.each(res, function (i, obj) {
+							$.ajax({
+								async: false,
+								type: 'DELETE',
+								url: '/'+ schema.data.title +'/'+ obj.id,
+							})
+							.done(function () {
+								console.log('Item '+ obj.id +' deleted.');
+							});
+						});
+					}
+				});
+			}
+
 		}
 
 	};

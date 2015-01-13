@@ -1,12 +1,12 @@
 {
 	"db": {
 		"object": true,
-		"filename": "db.json"
+		"filename": "db/db.json"
 	},
 	"dev": {
 		"db": {
 			"object": false,
-			"filename": "db.json"
+			"filename": "db/test.json"
 		}
 	}
 }

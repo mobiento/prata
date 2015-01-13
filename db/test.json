@@ -1,0 +1,699 @@
+{
+  "posts": [
+    {
+      "title": "Jewell Will",
+      "body": "Bertha Wilkinson",
+      "id": 1
+    },
+    {
+      "title": "Myrtie Farrell",
+      "body": "Mrs. Anthony Abernathy",
+      "id": 2
+    },
+    {
+      "title": "Skylar Steuber",
+      "body": "Nils Crist",
+      "id": 3
+    },
+    {
+      "title": "Reuben Kuvalis",
+      "body": "Lindsay Hirthe",
+      "id": 4
+    },
+    {
+      "title": "Jason McKenzie",
+      "body": "Freida Stark",
+      "id": 5
+    },
+    {
+      "title": "Martina Turner",
+      "body": "Mr. Kathryne Larkin",
+      "id": 6
+    }
+  ],
+  "schemas": [
+    {
+      "title": "tests",
+      "type": "array",
+      "format": "tabs",
+      "items": {
+        "title": "Test",
+        "id": "test",
+        "headerTemplate": "{{self.people.name}}",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "property": {
+            "type": "string",
+            "description": "Description"
+          },
+          "other": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000,
+            "description": "Description"
+          },
+          "people": {
+            "$ref": "http://prata.mobiento.com/schemas/1"
+          }
+        }
+      },
+      "id": 1
+    },
+    {
+      "title": "people",
+      "type": "array",
+      "format": "tabs",
+      "items": {
+        "title": "Person",
+        "headerTemplate": "{{self.name}}",
+        "type": "object",
+        "id": "person",
+        "properties": {
+          "name": {
+            "type": "string",
+            "default": "{{_fullname 'ru' 'ja' 'es'}}",
+            "description": "First and Last name",
+            "minLength": 4
+          },
+          "age": {
+            "type": "integer",
+            "default": "{{_random 18 99}}",
+            "minimum": 18,
+            "maximum": 99
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "male",
+              "female"
+            ]
+          },
+          "location": {
+            "type": "object",
+            "title": "Location",
+            "properties": {
+              "city": {
+                "type": "string",
+                "default": "{{_city}}"
+              },
+              "state": {
+                "type": "string",
+                "default": "{{_state}}"
+              },
+              "citystate": {
+                "type": "string",
+                "description": "This is generated automatically from the previous two fields",
+                "template": "{{city}}, {{state}}",
+                "watch": {
+                  "city": "person.location.city",
+                  "state": "person.location.state"
+                }
+              }
+            }
+          },
+          "pets": {
+            "type": "array",
+            "format": "tabs",
+            "title": "Pets",
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "headerTemplate": "{{self.name}} the {{self.type}}",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "cat",
+                    "dog",
+                    "bird",
+                    "reptile",
+                    "other"
+                  ],
+                  "default": "{{_random 'cat' 'dog' 'bird' 'reptile'}}"
+                },
+                "name": {
+                  "type": "string",
+                  "default": "{{_firstname}}"
+                },
+                "fixed": {
+                  "type": "boolean",
+                  "title": "spayed / neutered"
+                }
+              }
+            }
+          }
+        }
+      },
+      "id": 2
+    },
+    {
+      "title": "posts",
+      "type": "array",
+      "format": "tabs",
+      "items": {
+        "title": "Article",
+        "id": "article",
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "default": "{{_fullname}}"
+          },
+          "body": {
+            "type": "string",
+            "default": "{{_fullname}}"
+          },
+          "id": {
+            "type": "integer"
+          }
+        }
+      },
+      "id": 4
+    },
+    {
+      "title": "animals",
+      "type": "array",
+      "format": "tabs",
+      "items": {
+        "title": "Animal",
+        "id": "animal",
+        "type": "object",
+        "headerTemplate": "{{i}} - {{self.name}}",
+        "properties": {
+          "name": {
+            "type": "string",
+            "default": "{{_lastname}}"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "cat",
+              "dog",
+              "horse"
+            ],
+            "default": "{{_random 'cat' 'dog' 'horse'}}"
+          },
+          "peoplId": {
+            "type": "number",
+            "default": "{{_random 1 10}}"
+          },
+          "postId": {
+            "type": "number",
+            "default": "{{_random 1 3}}"
+          },
+          "id": {
+            "type": "integer"
+          }
+        }
+      },
+      "id": 5
+    },
+    {
+      "title": "pets",
+      "type": "array",
+      "format": "tabs",
+      "items": {
+        "title": "Pet",
+        "id": "pet",
+        "type": "object",
+        "headerTemplate": "{{self.type}}",
+        "properties": {
+          "name": {
+            "type": "string",
+            "default": "{{_firstname}}"
+          },
+          "color": {
+            "type": "string",
+            "format": "color"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "cat",
+              "dog",
+              "horse",
+              "pig",
+              "turtle",
+              "fish",
+              "bird",
+              "spider",
+              "snake",
+              "mouse"
+            ],
+            "default": "{{_random 'cat' 'dog' 'horse' 'pig' 'turtle' 'fish' 'bird' 'spider' 'snake' 'mouse'}}"
+          },
+          "postId": {
+            "type": "integer",
+            "default": "{{_random 1 3}}"
+          }
+        }
+      },
+      "id": 6
+    },
+    {
+      "title": "people_at_mobiento",
+      "$ref": "http://prata.mobiento.com/schemas/1",
+      "id": 7
+    },
+    {
+      "title": 0,
+      "type": "array",
+      "items": {
+        "title": "test",
+        "id": "test",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "id": 9
+    },
+    {
+      "title": "tests_8",
+      "type": "array",
+      "items": {
+        "title": "",
+        "id": "",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "id": 14
+    },
+    {
+      "title": "tests_9",
+      "type": "array",
+      "format": "tabs",
+      "items": {
+        "title": "",
+        "id": "",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "id": 17
+    },
+    {
+      "title": "inkclub",
+      "type": "array",
+      "format": "tabs",
+      "items": {
+        "title": "Language",
+        "id": "language",
+        "type": "object",
+        "headerTemplate": "{{self.language}}",
+        "properties": {
+          "language": {
+            "type": "string",
+            "default": "sv"
+          },
+          "menu": {
+            "title": "menu",
+            "type": "array",
+            "format": "tabs",
+            "items": {
+              "title": "Level 1",
+              "id": "level_1",
+              "type": "object",
+              "headerTemplate": "{{self.label}}",
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "submenu": {
+                  "title": "submenu",
+                  "type": "array",
+                  "format": "tabs",
+                  "items": {
+                    "title": "Level 2",
+                    "id": "level_2",
+                    "type": "object",
+                    "headerTemplate": "{{self.label}}",
+                    "properties": {
+                      "label": {
+                        "type": "string"
+                      },
+                      "subsubmenu": {
+                        "title": "subsubmenu",
+                        "type": "array",
+                        "format": "tabs",
+                        "items": {
+                          "title": "Level 3",
+                          "id": "level_3",
+                          "type": "object",
+                          "headerTemplate": "{{self.label}}",
+                          "properties": {
+                            "label": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "id": 18
+    },
+    {
+      "title": "tests_12",
+      "type": "array",
+      "items": {
+        "title": "",
+        "id": "",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "id": 20
+    }
+  ],
+  "people": [
+    {
+      "name": "Mack Williamson",
+      "age": 29,
+      "gender": "male",
+      "location": {
+        "city": "Gussiefurt",
+        "state": "Florida",
+        "citystate": "Gussiefurt, Florida"
+      },
+      "pets": [
+        {
+          "type": "cat",
+          "name": "Cicero",
+          "fixed": true
+        }
+      ],
+      "id": 1
+    },
+    {
+      "name": "Jaquelin Johansson",
+      "age": 31,
+      "gender": "male",
+      "location": {
+        "city": "Olssonås",
+        "state": "Dalarna",
+        "citystate": "Olssonås, Dalarna"
+      },
+      "pets": [
+        {
+          "type": "bird",
+          "name": "Kyleigh",
+          "fixed": false
+        },
+        {
+          "type": "reptile",
+          "name": "Nicholas",
+          "fixed": true
+        }
+      ],
+      "id": 2
+    },
+    {
+      "name": "Maxence Lefevre IV",
+      "age": 30,
+      "gender": "male",
+      "location": {
+        "city": "South Camille",
+        "state": "Provence-Alpes-Côte d'Azur",
+        "citystate": "South Camille, Provence-Alpes-Côte d&#x27;Azur"
+      },
+      "pets": [
+        {
+          "type": "bird",
+          "name": "Romain",
+          "fixed": false
+        }
+      ],
+      "id": 3
+    },
+    {
+      "name": "Cheyenne Krebs",
+      "age": 26,
+      "gender": "male",
+      "location": {
+        "city": "Bad Justinestadt",
+        "state": "Thüringen",
+        "citystate": "Bad Justinestadt, Thüringen"
+      },
+      "pets": [],
+      "id": 4
+    },
+    {
+      "name": "Kendra Svensson V",
+      "age": 23,
+      "gender": "male",
+      "location": {
+        "city": "Aling Charley",
+        "state": "Kronoberg",
+        "citystate": "Aling Charley, Kronoberg"
+      },
+      "pets": [],
+      "id": 5
+    },
+    {
+      "name": "Manuel Finke",
+      "age": 59,
+      "gender": "male",
+      "location": {
+        "city": "Korinnastadt",
+        "state": "Bayern",
+        "citystate": "Korinnastadt, Bayern"
+      },
+      "pets": [],
+      "id": 6
+    },
+    {
+      "name": "Niklas Lack",
+      "age": 62,
+      "gender": "male",
+      "location": {
+        "city": "Neu Fabian",
+        "state": "Schleswig-Holstein",
+        "citystate": "Neu Fabian, Schleswig-Holstein"
+      },
+      "pets": [],
+      "id": 7
+    },
+    {
+      "name": "Isac Andersson",
+      "age": 57,
+      "gender": "male",
+      "location": {
+        "city": "Larssonberg",
+        "state": "Norrbotten",
+        "citystate": "Larssonberg, Norrbotten"
+      },
+      "pets": [],
+      "id": 8
+    }
+  ],
+  "animals": [],
+  "pets": [
+    {
+      "name": "test",
+      "type": "dog",
+      "postId": 2,
+      "id": 1,
+      "color": "#e8d577"
+    },
+    {
+      "name": "Guido",
+      "type": "cat",
+      "postId": 1,
+      "id": 2,
+      "color": "#000000"
+    },
+    {
+      "name": "Ines",
+      "type": "mouse",
+      "postId": 2,
+      "id": 3,
+      "color": "#000000"
+    },
+    {
+      "name": "Sedrick",
+      "type": "turtle",
+      "postId": 1,
+      "id": 4,
+      "color": "#000000"
+    }
+  ],
+  "people_at_mobiento": [
+    {
+      "name": "Morton Kub",
+      "age": 18,
+      "gender": "male",
+      "location": {
+        "city": "Bogisichhaven",
+        "state": "Washington",
+        "citystate": "Bogisichhaven, Washington"
+      },
+      "pets": [
+        {
+          "type": "dog",
+          "name": "Loy",
+          "fixed": false
+        }
+      ],
+      "id": 1
+    },
+    {
+      "name": "General Reinger",
+      "age": 18,
+      "gender": "male",
+      "location": {
+        "city": "Lake Kale",
+        "state": "Minnesota",
+        "citystate": "Lake Kale, Minnesota"
+      },
+      "pets": [
+        {
+          "type": "reptile",
+          "name": "Alek",
+          "fixed": true
+        }
+      ],
+      "id": 2
+    }
+  ],
+  "favicon.ico": [],
+  "undefined": [],
+  "tests_2": [],
+  "tests_3": [],
+  "tests_4": [],
+  "tests_5": [],
+  "tests_6": [],
+  "tests_8": [
+    {
+      "name": 0,
+      "id": 1
+    }
+  ],
+  "tests_7": [],
+  "tests_1": [
+    {
+      "name": "test",
+      "id": 1
+    },
+    {
+      "name": "test2",
+      "id": 2
+    }
+  ],
+  "tests_9": [],
+  "inkclub": [
+    {
+      "language": "en",
+      "menu": [
+        {
+          "label": "Ink and toner",
+          "submenu": []
+        },
+        {
+          "label": "Office",
+          "submenu": []
+        }
+      ],
+      "id": 1
+    },
+    {
+      "language": "sv",
+      "menu": [
+        {
+          "label": "Bläck och toner",
+          "submenu": [
+            {
+              "label": "Bläck och toner",
+              "subsubmenu": [
+                {
+                  "label": "HP"
+                },
+                {
+                  "label": "CANON"
+                },
+                {
+                  "label": "EPSON"
+                },
+                {
+                  "label": "LEXMARK"
+                },
+                {
+                  "label": "BROTHER"
+                },
+                {
+                  "label": "SAMSUNG"
+                },
+                {
+                  "label": "DELL"
+                },
+                {
+                  "label": "OKI"
+                },
+                {
+                  "label": "RICOH"
+                },
+                {
+                  "label": "XEROX"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Kontor",
+          "submenu": [
+            {
+              "label": "Kontorsmaterial",
+              "subsubmenu": []
+            },
+            {
+              "label": "Skrivarpapper",
+              "subsubmenu": []
+            },
+            {
+              "label": "Skrivare",
+              "subsubmenu": []
+            },
+            {
+              "label": "Konferens",
+              "subsubmenu": []
+            },
+            {
+              "label": "Kök och städ",
+              "subsubmenu": []
+            }
+          ]
+        }
+      ],
+      "id": 2
+    }
+  ],
+  "tests_11": [
+    {
+      "name": "q",
+      "id": 1
+    }
+  ],
+  "tests_12": [],
+  "script.js": []
+}

@@ -1,0 +1,457 @@
+{
+  "posts":[
+    {
+      "title":"Dr. Tremaine Russel",
+      "body":"Darren Harris",
+      "peoplId":1,
+      "id":1
+    },
+    {
+      "title":"Haskell Cruickshank",
+      "body":"Ms. Keon Bahringer",
+      "peoplId":2,
+      "id":2
+    },
+    {
+      "title":"Alvena Langosh",
+      "body":"Dr. Nikolas Becker",
+      "peoplId":6,
+      "id":3
+    },
+    {
+      "title":"Karlee Torphy",
+      "body":"Dr. Yadira Stehr",
+      "peoplId":1,
+      "id":4
+    },
+    {
+      "title":"Otilia Turcotte PhD",
+      "body":"Henri Turner",
+      "peoplId":9,
+      "id":5
+    },
+    {
+      "title":"Bridie Fay",
+      "body":"Maudie Keeling",
+      "peoplId":3,
+      "id":6
+    },
+    {
+      "title":"Miss Carrie Hamill",
+      "body":"Waino Cummings",
+      "peoplId":7,
+      "id":7
+    },
+    {
+      "title":"Beverly Pfannerstill",
+      "body":"Simone Beier IV",
+      "peoplId":3,
+      "id":8
+    },
+    {
+      "title":"Rodrigo Bauch",
+      "body":"Margaretta Schulist I",
+      "peoplId":9,
+      "id":9
+    },
+    {
+      "title":"Noah Hand",
+      "body":"Mrs. Eliezer Streich",
+      "peoplId":2,
+      "id":10
+    }
+  ],
+  "schemas":[
+    {
+      "title":"people",
+      "type":"array",
+      "format":"tabs",
+      "items":{
+        "title":"Person",
+        "headerTemplate":"{{self.name}}",
+        "type":"object",
+        "id":"person",
+        "properties":{
+          "id":{
+            "type":"integer",
+            "links":[
+              {
+                "rel":"posts",
+                "href":"/people/{{self}}/posts/"
+              },
+              {
+                "rel":"pets",
+                "href":"/people/{{self}}/pets/"
+              }
+            ]
+          },
+          "name":{
+            "type":"string",
+            "default":"{{_fullname 'ru' 'ja' 'es'}}",
+            "description":"First and Last name",
+            "minLength":4
+          },
+          "age":{
+            "type":"integer",
+            "default":"{{_random 18 99}}",
+            "minimum":18,
+            "maximum":99
+          },
+          "gender":{
+            "type":"string",
+            "enum":[
+              "male",
+              "female"
+            ]
+          },
+          "location":{
+            "type":"object",
+            "title":"Location",
+            "properties":{
+              "city":{
+                "type":"string",
+                "default":"{{_city}}"
+              },
+              "state":{
+                "type":"string",
+                "default":"{{_state}}"
+              },
+              "citystate":{
+                "type":"string",
+                "description":"This is generated automatically from the previous two fields",
+                "template":"{{city}}, {{state}}",
+                "watch":{
+                  "city":"person.location.city",
+                  "state":"person.location.state"
+                }
+              }
+            }
+          },
+          "pets":{
+            "type":"array",
+            "format":"tabs",
+            "title":"Pets",
+            "uniqueItems":true,
+            "items":{
+              "type":"object",
+              "headerTemplate":"{{self.name}} the {{self.type}}",
+              "properties":{
+                "type":{
+                  "type":"string",
+                  "enum":[
+                    "cat",
+                    "dog",
+                    "bird",
+                    "reptile",
+                    "other"
+                  ],
+                  "default":"{{_random 'cat' 'dog' 'bird' 'reptile'}}"
+                },
+                "name":{
+                  "type":"string",
+                  "default":"{{_firstname}}"
+                },
+                "fixed":{
+                  "type":"boolean",
+                  "title":"spayed / neutered"
+                }
+              }
+            }
+          }
+        }
+      },
+      "id":1
+    },
+    {
+      "title":"posts",
+      "type":"array",
+      "format":"tabs",
+      "items":{
+        "title":"Article",
+        "id":"article",
+        "type":"object",
+        "headerTemplate":"{{self.id}}. {{self.title}}",
+        "properties":{
+          "title":{
+            "type":"string",
+            "default":"{{_fullname}}"
+          },
+          "body":{
+            "type":"string",
+            "default":"{{_fullname}}"
+          },
+          "peoplId":{
+            "type":"integer",
+            "default":"{{_random 1 10}}"
+          },
+          "id":{
+            "type":"integer"
+          }
+        }
+      },
+      "id":2
+    },
+    {
+      "title":"pets",
+      "type":"array",
+      "format":"tabs",
+      "items":{
+        "title":"Pet",
+        "id":"pet",
+        "type":"object",
+        "headerTemplate":"{{self.name}} the {{self.type}}",
+        "properties":{
+          "name":{
+            "type":"string",
+            "default":"{{_firstname}}"
+          },
+          "type":{
+            "type":"string",
+            "enum":[
+              "cat",
+              "dog",
+              "horse",
+              "pig",
+              "turtle",
+              "fish",
+              "bird",
+              "spider",
+              "snake",
+              "mouse"
+            ],
+            "default":"{{_random 'cat' 'dog' 'horse' 'pig' 'turtle' 'fish' 'bird' 'spider' 'snake' 'mouse'}}"
+          },
+          "peoplId":{
+            "type":"integer",
+            "default":"{{_random 1 10}}"
+          },
+          "id":{
+            "type":"integer"
+          }
+        }
+      },
+      "id":3
+    }
+  ],
+  "people":[
+    {
+      "name":"Mack Williamson",
+      "age":29,
+      "gender":"male",
+      "location":{
+        "city":"Gussiefurt",
+        "state":"Florida",
+        "citystate":"Gussiefurt, Florida"
+      },
+      "pets":[
+        {
+          "type":"cat",
+          "name":"Cicero",
+          "fixed":true
+        }
+      ],
+      "id":1
+    },
+    {
+      "name":"Jaquelin Johansson",
+      "age":31,
+      "gender":"male",
+      "location":{
+        "city":"Olssonås",
+        "state":"Dalarna",
+        "citystate":"Olssonås, Dalarna"
+      },
+      "pets":[
+        {
+          "type":"bird",
+          "name":"Kyleigh",
+          "fixed":false
+        },
+        {
+          "type":"reptile",
+          "name":"Nicholas",
+          "fixed":true
+        }
+      ],
+      "id":2
+    },
+    {
+      "name":"Kiarra Pfeffer",
+      "age":68,
+      "gender":"male",
+      "location":{
+        "city":"Lake Haven",
+        "state":"Липецкая область",
+        "citystate":"Lake Haven, Липецкая область"
+      },
+      "pets":[
+
+      ],
+      "id":3
+    },
+    {
+      "name":"大翔 松本",
+      "age":20,
+      "gender":"male",
+      "location":{
+        "city":"港 翼",
+        "state":"鳥取県",
+        "citystate":"港 翼, 鳥取県"
+      },
+      "pets":[
+
+      ],
+      "id":4
+    },
+    {
+      "name":"Maxence Lefevre IV",
+      "age":30,
+      "gender":"male",
+      "location":{
+        "city":"South Camille",
+        "state":"Provence-Alpes-Côte d'Azur",
+        "citystate":"South Camille, Provence-Alpes-Côte d&#x27;Azur"
+      },
+      "pets":[
+        {
+          "type":"bird",
+          "name":"Romain",
+          "fixed":false
+        }
+      ],
+      "id":5
+    },
+    {
+      "name":"Eduardo Alemán",
+      "age":57,
+      "gender":"male",
+      "location":{
+        "city":"Hernandesshire",
+        "state":"Andalucía",
+        "citystate":"Hernandesshire, Andalucía"
+      },
+      "pets":[
+
+      ],
+      "id":6
+    },
+    {
+      "name":"Ms. 結愛 斎藤",
+      "age":46,
+      "gender":"male",
+      "location":{
+        "city":"小林市",
+        "state":"石川県",
+        "citystate":"小林市, 石川県"
+      },
+      "pets":[
+
+      ],
+      "id":7
+    },
+    {
+      "name":"Carmen Heredia",
+      "age":50,
+      "gender":"male",
+      "location":{
+        "city":"Natalialand",
+        "state":"Comunidad de Madrid",
+        "citystate":"Natalialand, Comunidad de Madrid"
+      },
+      "pets":[
+
+      ],
+      "id":8
+    },
+    {
+      "id":9,
+      "name":"Kendra Svensson V",
+      "age":23,
+      "gender":"male",
+      "location":{
+        "city":"Aling Charley",
+        "state":"Kronoberg",
+        "citystate":"Aling Charley, Kronoberg"
+      },
+      "pets":[
+
+      ]
+    },
+    {
+      "id":10,
+      "name":"Gus Rau V",
+      "age":46,
+      "gender":"male",
+      "location":{
+        "city":"East Clarissa",
+        "state":"Ивановская область",
+        "citystate":"East Clarissa, Ивановская область"
+      },
+      "pets":[
+
+      ]
+    }
+  ],
+  "pets":[
+    {
+      "name":"Otto",
+      "type":"dog",
+      "peoplId":5,
+      "id":1
+    },
+    {
+      "name":"Kennedi",
+      "type":"mouse",
+      "peoplId":8,
+      "id":2
+    },
+    {
+      "name":"Vidal",
+      "type":"fish",
+      "peoplId":4,
+      "id":3
+    },
+    {
+      "name":"Desmond",
+      "type":"turtle",
+      "peoplId":10,
+      "id":4
+    },
+    {
+      "name":"Jacquelyn",
+      "type":"turtle",
+      "peoplId":3,
+      "id":5
+    },
+    {
+      "name":"London",
+      "type":"snake",
+      "peoplId":10,
+      "id":6
+    },
+    {
+      "name":"Rosendo",
+      "type":"dog",
+      "peoplId":4,
+      "id":7
+    },
+    {
+      "name":"Reggie",
+      "type":"bird",
+      "peoplId":10,
+      "id":8
+    },
+    {
+      "name":"Gerda",
+      "type":"horse",
+      "peoplId":1,
+      "id":9
+    },
+    {
+      "name":"Eloise",
+      "type":"mouse",
+      "peoplId":5,
+      "id":10
+    }
+  ]
+}

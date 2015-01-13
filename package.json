@@ -39,6 +39,7 @@
     "less-plugin-autoprefix": "latest",
     "less-plugin-clean-css": "latest"
   },
+  "main": "src/index.js",
   "scripts": {
     "lint": "jshint src/public/assets/scripts/app.js",
     "build": "npm run build:js && npm run build:css && npm run build:html",
@@ -52,7 +53,7 @@
     "watch:data": "watch 'npm run build:html' src/contents/",
     "watch:css": "watch 'npm run build:css' src/public/assets/styles/",
     "watch:js": "watch 'npm run build:js' src/public/assets/scripts/",
-    "dev": "parallelshell 'npm start' 'npm run watch'",
-    "start": "nodemon server.js"
+    "start": "NODE_ENV=development nodemon src/server.js",
+    "dev": "parallelshell 'npm start' 'npm run watch'"
   }
 }

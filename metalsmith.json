@@ -1,6 +1,6 @@
 {
-  "source": "./contents",
-  "destination": "./public",
+  "source": "./src/contents",
+  "destination": "./src/public",
   "clean": false,
   "metadata": {
     "title": "Prata",
@@ -9,14 +9,14 @@
   "plugins": {
     "metalsmith-markdown": {},
     "metalsmith-collections": {
-      "pages": "./contents/*.md"
+      "pages": "./src/contents/*.md"
     },
     "metalsmith-permalinks": {
       "pattern": ":title"
     },
     "metalsmith-templates": {
       "engine": "handlebars",
-      "directory": "./templates",
+      "directory": "./src/templates",
       "partials": {
         "header": "partials/header",
         "footer": "partials/footer"

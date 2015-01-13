@@ -5,9 +5,9 @@
     	".git/*",
     	".gitignore",
     	"db.json",
-    	"public/*",
-    	"contents/*",
-    	"templates/*",
+    	"src/public/*",
+    	"src/contents/*",
+    	"src/templates/*",
     	"node_modules/**/node_modules"
   	]
 }

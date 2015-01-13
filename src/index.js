@@ -31,7 +31,7 @@ if (fs.existsSync(process.cwd() + '/public')) {
 	app.use(serveStatic(process.cwd() + '/public'));
 } 
 else {
-	app.use(serveStatic(__dirname + '/src/public'));
+	app.use(serveStatic(__dirname + '/public'));
 }
 
 if (fs.existsSync(process.cwd() + '/server.json')) {

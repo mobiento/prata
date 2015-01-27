@@ -5,6 +5,12 @@
     "name": "Julien Béchade",
     "email": "julien.bechade@gmail.com"
   },
+  "contributors": [
+    {
+      "name": "Mobiento",
+      "email": "production@mobiento.com"
+    }
+  ],
   "description": "The easiest way to prototype data",
   "repository": {
     "type": "git",
@@ -54,6 +60,7 @@
     "watch:css": "watch 'npm run build:css' src/public/assets/styles/",
     "watch:js": "watch 'npm run build:js' src/public/assets/scripts/",
     "start": "NODE_ENV=development nodemon src/server.js",
-    "dev": "parallelshell 'npm start' 'npm run watch'"
+    "dev": "parallelshell 'npm start' 'npm run watch'",
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

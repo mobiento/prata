@@ -61,6 +61,7 @@ if(options.db.object) {
 	}
 	
 	app.use(server(json));
+	app.db = json;
 }
 else {
 	app.use(server({}, root + '/' + options.db.filename));

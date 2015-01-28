@@ -43,7 +43,9 @@
     "metalsmith-markdown": "latest",
     "metalsmith-permalinks": "latest",
     "less-plugin-autoprefix": "latest",
-    "less-plugin-clean-css": "latest"
+    "less-plugin-clean-css": "latest",
+    "mocha": "~1.14.0",
+    "supertest": "~0.8.1"
   },
   "main": "src/index.js",
   "scripts": {
@@ -61,6 +63,7 @@
     "watch:js": "watch 'npm run build:js' src/public/assets/scripts/",
     "start": "NODE_ENV=development nodemon src/server.js",
     "dev": "parallelshell 'npm start' 'npm run watch'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -R spec test",
+    "test_old": "echo \"Error: no test specified\" && exit 1"
   }
 }

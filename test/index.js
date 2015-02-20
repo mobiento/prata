@@ -1,7 +1,7 @@
-var request = require('supertest')
-var assert  = require('assert')
-var server  = require('../src/server.js')
-var db 		= server.db
+var request   = require('supertest')
+var assert    = require('assert')
+var server    = require('../src/server.js')
+var db        = server.db
 
 
 describe('Server', function() {

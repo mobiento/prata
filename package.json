@@ -5,39 +5,28 @@
     "name": "Julien Béchade",
     "email": "julien.bechade@gmail.com"
   },
+  "contributors": [
+    {
+      "name": "Mobiento",
+      "email": "production@mobiento.com"
+    }
+  ],
   "description": "The easiest way to prototype data",
   "repository": {
     "type": "git",
     "url": "https://github.com/mobiento/prata.git"
   },
-  "dependencies": {
-    "json-server": "latest",
-    "express": "^4.10.7",
-    "cors": "^2.5.2",
-    "method-override": "^2.3.1",
-    "morgan": "^1.5.1",
-    "body-parser": "^1.10.1",
-    "errorhandler": "^1.3.2",
-    "serve-static": "^1.8.0"
+  "production": {
+    "db": {
+      "object": true,
+      "filename": "db/db.json"
+    }
   },
-  "devDependencies": {
-    "jquery": "latest",
-    "codemirror": "latest",
-    "handlebars": "latest",
-    "faker": "latest",
-    "less": "latest",
-    "jshint": "latest",
-    "browserify": "latest",
-    "minifyify": "latest",
-    "watch": "latest",
-    "parallelshell": "latest",
-    "metalsmith": "latest",
-    "metalsmith-collections": "latest",
-    "metalsmith-templates": "latest",
-    "metalsmith-markdown": "latest",
-    "metalsmith-permalinks": "latest",
-    "less-plugin-autoprefix": "latest",
-    "less-plugin-clean-css": "latest"
+  "development": {
+    "db": {
+      "object": false,
+      "filename": "db/test.json"
+    }
   },
   "main": "src/index.js",
   "scripts": {
@@ -54,6 +43,43 @@
     "watch:css": "watch 'npm run build:css' src/public/assets/styles/",
     "watch:js": "watch 'npm run build:js' src/public/assets/scripts/",
     "start": "NODE_ENV=development nodemon src/server.js",
-    "dev": "parallelshell 'npm start' 'npm run watch'"
+    "dev": "parallelshell 'npm start' 'npm run watch'",
+    "test": "mocha -R spec test",
+    "test:selenium": "mocha --reporter mocha-teamcity-reporter test/selenium.js "
+  },
+  "dependencies": {
+    "json-server": "latest",
+    "express": "^4.10.7",
+    "cors": "^2.5.2",
+    "method-override": "^2.3.1",
+    "morgan": "^1.5.1",
+    "body-parser": "^1.10.1",
+    "errorhandler": "^1.3.2",
+    "serve-static": "^1.8.0"
+  },
+  "devDependencies": {
+    "async": "^0.9.0",
+    "browserify": "latest",
+    "codemirror": "latest",
+    "faker": "latest",
+    "handlebars": "latest",
+    "jquery": "latest",
+    "jshint": "latest",
+    "less": "latest",
+    "less-plugin-autoprefix": "latest",
+    "less-plugin-clean-css": "latest",
+    "metalsmith": "latest",
+    "metalsmith-collections": "latest",
+    "metalsmith-markdown": "latest",
+    "metalsmith-permalinks": "latest",
+    "metalsmith-templates": "latest",
+    "minifyify": "latest",
+    "mocha": "~1.14.0",
+    "mocha-teamcity-reporter": "0.0.4",
+    "parallelshell": "latest",
+    "selenium-webdriver": "^2.44.0",
+    "supertest": "~0.8.1",
+    "watch": "latest",
+    "webdriverio": "^2.4.5"
   }
 }

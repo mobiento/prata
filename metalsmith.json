@@ -7,10 +7,11 @@
     "description": "Prototype data."
   },
   "plugins": {
-    "metalsmith-markdown": {},
     "metalsmith-collections": {
-      "pages": "./src/contents/*.md"
+      "pages": "./src/contents/*",
+      "docs": "./src/docs/*"
     },
+    "metalsmith-markdown": {},
     "metalsmith-permalinks": {
       "pattern": ":title"
     },

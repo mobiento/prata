@@ -7,6 +7,7 @@ var serveStatic    = require('serve-static');
 var methodOverride = require('method-override');
 var logger         = require('morgan');
 var errorhandler   = require('errorhandler');
+var pkg 					 = require('./../package.json');
 
 var log = console.log;
 var app = express();
@@ -27,13 +28,16 @@ if (process.env.NODE_ENV === 'development') {
 	app.use(errorhandler());
 }
 
+// If there's a `public` folder at the root of the app, we serve it
 if (fs.existsSync(process.cwd() + '/public')) {
 	app.use(serveStatic(process.cwd() + '/public'));
-} 
+}
+// Otherwise we're serving the default one
 else {
 	app.use(serveStatic(__dirname + '/public'));
 }
 
+// The same logic than above applies to `server.json`
 if (fs.existsSync(process.cwd() + '/server.json')) {
 	root = process.cwd();
 } 
@@ -41,6 +45,7 @@ else {
 	root = __dirname;
 }
 
+// Let's try to parse the JSON server configuration
 try {
 	options = JSON.parse(fs.readFileSync(root + '/server.json'));
 } 
@@ -61,6 +66,7 @@ if(options.db.object) {
 	}
 	
 	app.use(server(json));
+	app.db = json;
 }
 else {
 	app.use(server({}, root + '/' + options.db.filename));

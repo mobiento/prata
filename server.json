@@ -5,8 +5,8 @@
 	},
 	"dev": {
 		"db": {
-			"object": false,
-			"filename": "db/test.json"
+			"object": true,
+			"filename": "db/db.json"
 		}
 	}
 }

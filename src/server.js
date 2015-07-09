@@ -6,3 +6,5 @@ server.listen(port);
 
 log('You\'re app is running on port '+ port);
 
+module.exports = server;
+

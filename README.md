@@ -1,24 +1,26 @@
 __This is a beta version.__  
 
-# Prata
+# Prata [![Build Status](https://travis-ci.org/mobiento/prata.svg?branch=develop)](https://travis-ci.org/mobiento/prata) [![npm version](https://badge.fury.io/js/prata.svg)](https://www.npmjs.com/package/prata)
 
 Prata allows you to generate and/edit data in 3 easy steps:  
 
  1. Add a schema following the [json-schema.org](http://json-schema.org/) standards.
  2. Edit data based on this structure via a user friendly or code editor.
- 3. You can now GET, POST your data from anywhere.
+ 3. You can now GET, POST, PUT, PATCH and DELETE your data from anywhere.
 
 It is a Nodejs application based on [typicode/json-server](https://github.com/typicode/json-server) and [jdorn/json-editor](https://github.com/jdorn/json-editor).  
 Therefore we advice you to read the documentation of those two projects before getting started.  
 
 ## Installation
 
-You need to [Nodejs](http://nodejs.org/) installed on your computer/server.  
+You need [Nodejs](http://nodejs.org/) installed on your computer/server.  
 `$ npm install` to install all dependencies required by the project.  
 `$ npm start` to run a webserver at [http://localhost:3000/](http://localhost:3000/).  
 
 ## Development
 
+`$ npm install -g nodemon` to restart the server on file change.  
+`$ npm install` to install all dependencies.  
 `$ npm run dev` to build the project, start the server and watch/rebuild HTML, CSS and JS.  
 
 Under the hood, we're using:  

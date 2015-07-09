@@ -4,7 +4,7 @@
 		".DS_store",
     	".git/*",
     	".gitignore",
-    	"db.json",
+    	"db/*.json",
     	"src/public/*",
     	"src/contents/*",
     	"src/templates/*",

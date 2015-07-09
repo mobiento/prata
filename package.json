@@ -16,6 +16,37 @@
     "type": "git",
     "url": "https://github.com/mobiento/prata.git"
   },
+  "production": {
+    "db": {
+      "object": true,
+      "filename": "db/db.json"
+    }
+  },
+  "development": {
+    "db": {
+      "object": false,
+      "filename": "db/test.json"
+    }
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "jshint src/public/assets/scripts/app.js",
+    "build": "npm run build:js && npm run build:css && npm run build:html",
+    "build:html": "metalsmith",
+    "build:css": "lessc --clean-css='--s0 --advanced' --autoprefix='last 2 versions' --source-map src/public/assets/styles/styles.less src/public/assets/build/styles.css",
+    "build:js": "browserify src/public/assets/scripts/app.js > src/public/assets/build/scripts.js",
+    "build:uglifyjs": "browserify src/public/assets/scripts/app.js -d -p [minifyify --map scripts.js.map --output src/public/assets/build/scripts.js.map --uglify] > src/public/assets/build/scripts.js",
+    "prebuild:js": "npm run lint",
+    "watch": "parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run watch:html' 'npm run watch:data'",
+    "watch:html": "watch 'npm run build:html' src/templates/",
+    "watch:data": "watch 'npm run build:html' src/contents/",
+    "watch:css": "watch 'npm run build:css' src/public/assets/styles/",
+    "watch:js": "watch 'npm run build:js' src/public/assets/scripts/",
+    "start": "NODE_ENV=development nodemon src/server.js",
+    "dev": "parallelshell 'npm start' 'npm run watch'",
+    "test": "mocha -R spec test",
+    "test:selenium": "mocha --reporter mocha-teamcity-reporter test/selenium.js "
+  },
   "dependencies": {
     "json-server": "latest",
     "express": "^4.10.7",
@@ -50,25 +81,5 @@
     "supertest": "~0.8.1",
     "watch": "latest",
     "webdriverio": "^2.4.5"
-  },
-  "main": "src/index.js",
-  "scripts": {
-    "lint": "jshint src/public/assets/scripts/app.js",
-    "build": "npm run build:js && npm run build:css && npm run build:html",
-    "build:html": "metalsmith",
-    "build:css": "lessc --clean-css='--s0 --advanced' --autoprefix='last 2 versions' --source-map src/public/assets/styles/styles.less src/public/assets/build/styles.css",
-    "build:js": "browserify src/public/assets/scripts/app.js > src/public/assets/build/scripts.js",
-    "build:uglifyjs": "browserify src/public/assets/scripts/app.js -d -p [minifyify --map scripts.js.map --output src/public/assets/build/scripts.js.map --uglify] > src/public/assets/build/scripts.js",
-    "prebuild:js": "npm run lint",
-    "watch": "parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run watch:html' 'npm run watch:data'",
-    "watch:html": "watch 'npm run build:html' src/templates/",
-    "watch:data": "watch 'npm run build:html' src/contents/",
-    "watch:css": "watch 'npm run build:css' src/public/assets/styles/",
-    "watch:js": "watch 'npm run build:js' src/public/assets/scripts/",
-    "start": "NODE_ENV=development nodemon src/server.js",
-    "dev": "parallelshell 'npm start' 'npm run watch'",
-    "test": "mocha -R spec test",
-    "test:selenium": "mocha --reporter mocha-teamcity-reporter test/selenium.js ",
-    "test_old": "echo \"Error: no test specified\" && exit 1"
   }
 }

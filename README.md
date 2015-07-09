@@ -1,6 +1,6 @@
 __This is a beta version.__  
 
-# Prata [![npm version](https://badge.fury.io/js/prata.svg)](https://www.npmjs.com/package/prata)
+# Prata [![Build Status](https://travis-ci.org/mobiento/prata.svg?branch=develop)](https://travis-ci.org/mobiento/prata) [![npm version](https://badge.fury.io/js/prata.svg)](https://www.npmjs.com/package/prata)
 
 Prata allows you to generate and/edit data in 3 easy steps:  
 

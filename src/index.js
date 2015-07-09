@@ -1,4 +1,5 @@
 var fs             = require('fs');
+var path 					 = require('path');
 var express        = require('express');
 var server         = require('json-server');
 var cors           = require('cors');
@@ -65,11 +66,11 @@ if(options.db.object) {
 		throw err;
 	}
 	
-	app.use(server(json));
+	app.use(server.router(json));
 	app.db = json;
 }
 else {
-	app.use(server({}, root + '/' + options.db.filename));
+	app.use(server.router(root + '/' + options.db.filename));
 }
 
 module.exports = app;
